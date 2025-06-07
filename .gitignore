@@ -1,0 +1,23 @@
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+.vs/
+bin/
+obj/
+
+# NUnit
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
