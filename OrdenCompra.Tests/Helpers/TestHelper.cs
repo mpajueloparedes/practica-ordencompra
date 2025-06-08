@@ -1,34 +1,34 @@
-﻿using OrdenCompra.Core.DTOs.Request;
-using OrdenCompra.Core.Entidades;
+﻿using OrdenCompra.Core.Entidades;
+using OrdenCompra.Core.DTOs.Request;
 
-namespace OrdenCompra.Tests.Fixtures;
+namespace OrdenCompra.Tests.Helpers;
 
-public static class OrdenTestFixture
+public static class TestHelper
 {
-    public static Usuario CrearUsuarioTest(int id = 1, string nombre = "TestUser", string rol = "Usuario")
+    public static Usuario CrearUsuario(int id = 1, string nombre = "TestUser")
     {
         return new Usuario
         {
             Id = id,
             NombreUsuario = nombre,
             Email = $"{nombre.ToLower()}@test.com",
-            PasswordHash = "hashedpassword",
-            Rol = rol,
-            FechaCreacion = DateTime.UtcNow,
+            PasswordHash = "hash123",
+            Rol = "Usuario",
             EstaActivo = true
         };
     }
 
-    public static Orden CrearOrdenTest(int id = 1, int usuarioId = 1, string cliente = "Cliente Test")
+    public static Orden CrearOrden(int id = 1, string cliente = "Cliente Test")
     {
         var orden = new Orden
         {
             Id = id,
             Cliente = cliente,
-            UsuarioId = usuarioId,
-            FechaCreacion = DateTime.UtcNow
+            UsuarioId = 1,
+            FechaCreacion = DateTime.Now
         };
 
+        // Agregar detalle de prueba
         var detalle = new OrdenDetalle
         {
             Id = 1,
@@ -38,14 +38,13 @@ public static class OrdenTestFixture
             PrecioUnitario = 50.00m
         };
         detalle.CalcularSubtotal();
-
         orden.Detalles.Add(detalle);
         orden.CalcularTotal();
 
         return orden;
     }
 
-    public static CrearOrdenRequest CrearOrdenRequestTest(string cliente = "Cliente Test")
+    public static CrearOrdenRequest CrearOrdenRequest(string cliente = "Cliente Test")
     {
         return new CrearOrdenRequest
         {
