@@ -17,3 +17,6 @@ Entity Framework Core, SQL Server
 JWT Bearer Authentication
 FluentValidation, AutoMapper
 Bootstrap 5, Swagger/OpenAPI
+
+## Base de Datos
+Ejecutar el archivo ScriptsBD.sql que se encuentra en la raíz.
