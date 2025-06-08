@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="text-center">
+    <div class="hero-section py-5 shadow-lg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold text-white mb-4">
+                        <i class="fas fa-shopping-cart me-3"></i>
+                        Sistema de Órdenes de Compra
+                    </h1>
+                    <p class="lead mb-4" style="color: rgba(255, 255, 255, 0.95);">
+                        Gestiona tus órdenes de compra de manera eficiente y segura
+                    </p>
+
+                    @if (Context.Session.GetString("Token") != null)
+                    {
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <a asp-controller="Ordenes" asp-action="Index" class="btn btn-light btn-lg me-md-2 text-dark fw-bold">
+                                <i class="fas fa-list me-2"></i>Ver Órdenes
+                            </a>
+                            <a asp-controller="Ordenes" asp-action="Crear" class="btn btn-outline-light btn-lg fw-bold">
+                                <i class="fas fa-plus me-2"></i>Nueva Orden
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <a asp-controller="Auth" asp-action="Login" class="btn btn-light btn-lg text-dark fw-bold">
+                            <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="features-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center mb-4">
+                    <div class="feature-box p-4 h-100 shadow-sm">
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                        <h4 class="text-dark fw-bold">Seguro</h4>
+                        <p class="text-muted">Autenticación JWT y autorización por roles para proteger tus datos.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="feature-box p-4 h-100 shadow-sm">
+                        <i class="fas fa-mobile-alt fa-3x text-primary mb-3"></i>
+                        <h4 class="text-dark fw-bold">Responsivo</h4>
+                        <p class="text-muted">Interfaz adaptable que funciona perfectamente en cualquier dispositivo.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="feature-box p-4 h-100 shadow-sm">
+                        <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                        <h4 class="text-dark fw-bold">Eficiente</h4>
+                        <p class="text-muted">Gestión rápida y eficiente de órdenes con filtros y paginación.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

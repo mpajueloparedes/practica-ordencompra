@@ -7,6 +7,7 @@
 .vs/
 bin/
 obj/
+logs/
 
 # NUnit
 *.VisualState.xml
@@ -21,3 +22,7 @@ artifacts/
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
+
+
+
+https://localhost:7051/Ordenes?Filtros.Cliente=&Filtros.FechaInicio=&__Invariant=Filtros.FechaInicio&Filtros.FechaFin=&__Invariant=Filtros.FechaFin&Filtros.Pagina=1&Filtros.TamanoPagina=10&Filtros.OrdenarPor=FechaCreacion&Filtros.OrdenarDireccion=DESC

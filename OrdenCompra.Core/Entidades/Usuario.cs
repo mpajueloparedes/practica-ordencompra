@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace OrdenCompra.Core.Entidades:
-   public class Usuario
+namespace OrdenCompra.Core.Entidades;
+public class Usuario
 {
     public int Id { get; set; }
 

@@ -1,0 +1,186 @@
+﻿@model OrdenCompra.Web.Models.ViewModels.OrdenViewModel
+@{
+    ViewData["Title"] = "Editar Orden";
+}
+
+<style>
+.form-section {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1.5rem;
+}
+
+.form-section-header {
+    background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+    color: white;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    border-bottom: 2px solid #0d47a1;
+}
+
+.form-section-body {
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.detalle-row-enhanced {
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.detalle-row-enhanced:hover {
+    border-color: #0d47a1;
+    box-shadow: 0 4px 8px rgba(13, 71, 161, 0.15);
+    transform: translateY(-2px);
+}
+
+.detalle-row-enhanced .form-label {
+    color: #0d47a1;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.total-card {
+    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 8px rgba(46, 125, 50, 0.3);
+}
+
+.total-card .card-title {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+}
+
+.total-card .card-text {
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.btn-action-group .btn {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-action-group .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="fas fa-edit me-2"></i>Editar Orden #@Model.Id</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Editar" method="post" id="ordenForm">
+                    <input asp-for="Id" type="hidden" />
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Cliente" class="form-label">Cliente</label>
+                            <input asp-for="Cliente" class="form-control" placeholder="Nombre del cliente" />
+                            <span asp-validation-for="Cliente" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <small class="text-muted">Información de la Orden</small>
+                                    <p class="mb-1"><strong>ID:</strong> #@Model.Id</p>
+                                    <p class="mb-1"><strong>Fecha:</strong> @Model.FechaCreacionFormateada</p>
+                                    <p class="mb-0"><strong>Usuario:</strong> @Model.Usuario</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="mb-3"><i class="fas fa-list me-2"></i>Detalles de la Orden</h5>
+
+                    <div id="detalles-container">
+                        @for (int i = 0; i < Model.Detalles.Count; i++)
+                        {
+                            <div class="detalle-row border rounded p-3 mb-3 bg-light">
+                                <input asp-for="@Model.Detalles[i].Id" type="hidden" />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Producto</label>
+                                        <input asp-for="@Model.Detalles[i].Producto" class="form-control" placeholder="Nombre del producto" />
+                                        <span asp-validation-for="@Model.Detalles[i].Producto" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Cantidad</label>
+                                        <input asp-for="@Model.Detalles[i].Cantidad" class="form-control cantidad" type="number" min="1" />
+                                        <span asp-validation-for="@Model.Detalles[i].Cantidad" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Precio Unitario</label>
+                                        <input asp-for="@Model.Detalles[i].PrecioUnitario" class="form-control precio" type="number" step="0.01" min="0" />
+                                        <span asp-validation-for="@Model.Detalles[i].PrecioUnitario" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Subtotal</label>
+                                        <input class="form-control subtotal" type="text" readonly value="@Model.Detalles[i].SubtotalFormateado" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="form-label">&nbsp;</label>
+                                        <button type="button" class="btn btn-danger btn-sm d-block remover-detalle"
+                                                title="Eliminar detalle">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-outline-primary" id="agregar-detalle">
+                            <i class="fas fa-plus me-2"></i>Agregar Detalle
+                        </button>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 offset-md-6">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total de la Orden</h5>
+                                    <h3 class="card-text" id="total-orden">@Model.TotalFormateado</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-2"></i>Actualizar Orden
+                        </button>
+                        <a asp-action="Detalles" asp-route-id="@Model.Id" class="btn btn-info">
+                            <i class="fas fa-eye me-2"></i>Ver Detalles
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Volver a Lista
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/orden-detalles.js"></script>
+}

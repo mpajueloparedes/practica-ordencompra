@@ -1,0 +1,95 @@
+﻿@model OrdenCompra.Web.Models.ViewModels.OrdenViewModel
+@{
+    ViewData["Title"] = "Eliminar Orden";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Confirmar Eliminación</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning" role="alert">
+                    <i class="fas fa-warning me-2"></i>
+                    <strong>¡Atención!</strong> Esta acción no se puede deshacer. Se eliminará la orden y todos sus detalles.
+                </div>
+
+                <!-- Información de la Orden a Eliminar -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Orden a Eliminar</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>ID:</strong> #@Model.Id</p>
+                                <p><strong>Cliente:</strong> @Model.Cliente</p>
+                                <p><strong>Usuario:</strong> @Model.Usuario</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Fecha:</strong> @Model.FechaCreacionFormateada</p>
+                                <p><strong>Total Items:</strong> @Model.TotalDetalles</p>
+                                <p><strong>Total:</strong> <span class="badge bg-success">@Model.TotalFormateado</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detalles de la Orden -->
+                @if (Model.Detalles.Any())
+                {
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="mb-0">Productos que se eliminarán:</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th class="text-center">Cantidad</th>
+                                            <th class="text-end">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var detalle in Model.Detalles)
+                                        {
+                                            <tr>
+                                                <td>@detalle.Producto</td>
+                                                <td class="text-center">@detalle.Cantidad</td>
+                                                <td class="text-end">@detalle.SubtotalFormateado</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <!-- Botones de Confirmación -->
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Cancelar
+                    </a>
+
+                    <div>
+                        <a asp-action="Detalles" asp-route-id="@Model.Id" class="btn btn-info me-2">
+                            <i class="fas fa-eye me-2"></i>Ver Detalles
+                        </a>
+
+                        <form asp-action="Eliminar" method="post" class="d-inline">
+                            <input asp-for="Id" type="hidden" />
+                            <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('¿Está seguro de que desea eliminar esta orden? Esta acción no se puede deshacer.')">
+                                <i class="fas fa-trash me-2"></i>Confirmar Eliminación
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
